@@ -83,3 +83,86 @@ public class AppConfig {
 
 
 
+# Building a REST API with Spring
+
+In Spring, creating a RESTful API is a common task, and it can be easily achieved using annotations provided by the Spring Framework. 
+
+## @RestController
+
+The `@RestController` annotation is a combination of `@Controller` and `@ResponseBody`. It is used to create RESTful web services and eliminates the need to annotate each method with `@ResponseBody`.
+
+```java
+@RestController
+@RequestMapping("/api")
+public class ApiController {
+    // Controller methods go here
+}
+```
+
+## @GetMapping
+The `@GetMapping` annotation is used to handle HTTP GET requests. It is a specialized form of `@RequestMapping` that is annotated with `method = RequestMethod.GET`.
+
+```java
+@GetMapping("/student")
+    public Student getStudent(){
+        Student student = new Student(1, "Zohaib", "Ahmad");
+//        will return response in JSON
+        return student;
+    }
+```
+
+## @PathVariable
+
+The `@PathVariable` annotation is used to extract values from the URI path and bind them to method parameters.
+
+```java
+@GetMapping("/students/{id}/{FirstName}/{LastName}")
+    public Student StudentPathVariable(@PathVariable int id,
+                                       @PathVariable String FirstName,
+                                       @PathVariable String LastName){
+        Student student = new Student(id , FirstName, LastName);
+        return student;
+    }
+```
+
+## @RequestParam
+
+The `@RequestParam` annotation is used to extract query parameters from the URL and bind them to method parameters.
+
+```java
+@GetMapping("/students/query")
+    public Student studentRequestParam(@RequestParam int id,
+                                       @RequestParam String FirstName,
+                                       @RequestParam String LastName){
+        Student student = new Student(id, FirstName, LastName);
+        return student;
+    }
+```
+
+## @RequestBody
+
+The `@RequestBody` annotation is used to bind the HTTP request body to a method parameter. It is commonly used for handling POST requests.
+
+```java
+@PostMapping("/createUser")
+public ResponseEntity<String> createUser(@RequestBody User user) {
+    // Logic to create a user
+    // ...
+    return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
+}
+```
+
+## @PostMapping
+
+The `@PostMapping` annotation is a specialized form of `@RequestMapping` annotated with `method = RequestMethod.POST`. It is used to handle HTTP POST requests.
+
+```java
+@PostMapping("/addProduct")
+public ResponseEntity<String> addProduct(@RequestBody Product product) {
+    // Logic to add a product
+    // ...
+    return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully");
+}
+```
+
+####Continue............
