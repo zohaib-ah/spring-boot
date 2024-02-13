@@ -46,7 +46,7 @@ In the traditional approach, XML configuration files are used to define beans an
 
 ### 2. Annotation-based Configuration
 
-With the advent of Spring annotations, you can use annotations like `@Component`, `@Autowired`, etc., to configure beans and dependencies.
+With the advent of Spring annotations, you can use annotations like `@Component`(`@Controller`,`@Repository`, `@Service`), `@Autowired`, etc., to configure beans and dependencies.
 
 ```java
 // UserService.java
