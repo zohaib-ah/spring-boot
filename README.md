@@ -277,7 +277,7 @@ public class User {
 
 ```
 
-##Configration of application.properties file for database connection.
+## Configration of application.properties file for database connection.
 ```
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
@@ -292,15 +292,15 @@ spring.jpa.hibernate.ddl-auto=update
 ```
 ## API end points
 
-Create User => http://localhost:8080/api/user 
+Create User => <http://localhost:8080/api/user> 
 
-Get user by ID => http://localhost:8080/api/user/1
+Get user by ID => <http://localhost:8080/api/user/1>
 
-Get all users => http://localhost:8080/api/user
+Get all users => <http://localhost:8080/api/user>
 
-Update user by ID => http://localhost:8080/api/user/1
+Update user by ID => <http://localhost:8080/api/user/1>
 
-Delete user by ID => http://localhost:8080/api/user/1
+Delete user by ID => <http://localhost:8080/api/user/1>
 
 
 ####Continue............
