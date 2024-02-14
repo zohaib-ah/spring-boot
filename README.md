@@ -1,7 +1,7 @@
 # Spring Boot Learning Journey 🚀
 
 Explore the world of Spring Boot with this repository! 🌱
-
+ 
 Welcome to my Spring Boot learning journey repository, where I document my progress, experiments, and code snippets as I dive into the powerful world of Spring Boot.
 
 # Spring Core Concepts
@@ -292,7 +292,7 @@ spring.jpa.hibernate.ddl-auto=update
 ```
 ## API end points
 
-Create User => <http://localhost:8080/api/user> 
+Create User => [http://localhost:8080/api/user] 
 
 Get user by ID => <http://localhost:8080/api/user/1>
 
