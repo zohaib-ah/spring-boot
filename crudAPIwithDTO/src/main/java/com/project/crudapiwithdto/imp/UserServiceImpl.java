@@ -47,12 +47,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserById(Long id) {
+
         User user =  userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("user" , "id" , id)
         );
 
-
-//        return UserMapper.jpaToDto(user);
+        //return UserMapper.jpaToDto(user);
         return AutoMapper.MAPPER.JpaToDto(user);
     }
 
