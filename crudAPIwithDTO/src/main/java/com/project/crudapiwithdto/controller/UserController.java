@@ -1,9 +1,9 @@
-package com.project.crudapi.controller;
+package com.project.crudapiwithdto.controller;
 
 
-import com.project.crudapi.service.UserService;
-import lombok.AllArgsConstructor;
-import com.project.crudapi.entity.User;
+import com.project.crudapiwithdto.dto.UserDto;
+import com.project.crudapiwithdto.entity.User;
+import com.project.crudapiwithdto.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +18,13 @@ public class UserController {
     UserController(UserService userService){
         this.userService = userService;
     }
+
+
     //API CRUD CREATE OPERATION
 //    http://localhost:8080/api/user
     @PostMapping
-    public ResponseEntity<User> Create(@RequestBody User user){
-        User saveUser = userService.createUser(user);
+    public ResponseEntity<UserDto> Create(@RequestBody UserDto user){
+        UserDto saveUser = userService.createUser(user);
         return new ResponseEntity<>(saveUser, HttpStatus.CREATED);
 
     }
@@ -30,24 +32,24 @@ public class UserController {
     //API CRUD READ OPERATION
 //    http://localhost:8080/api/user/1
 @GetMapping("{id}")
-    public ResponseEntity<User> getById(@PathVariable Long id){
-        User user = userService.getUserById(id);
+    public ResponseEntity<UserDto> getById(@PathVariable Long id){
+        UserDto user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     //API READ ALL OPERATION
     @GetMapping
-    public  ResponseEntity<List<User>> getAll(){
-        List<User> user = userService.getAllUsers();
+    public  ResponseEntity<List<UserDto>> getAll(){
+        List<UserDto> user = userService.getAllUsers();
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     //API UPDATE OPERATION
 
     @PutMapping("{id}")
-    public ResponseEntity<User> update(@PathVariable Long id ,@RequestBody User user){
+    public ResponseEntity<UserDto> update(@PathVariable Long id ,@RequestBody UserDto user){
        user.setId(id);
-       User updatedUser =  userService.updateUser(user);
+       UserDto updatedUser =  userService.updateUser(user);
        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 

@@ -47,7 +47,7 @@ public class StudentController {
 
     //Spring boot HTTP Post request
 
-    @PostMapping("/student/create")
+    @PostMapping("student/create")
     public Student createStudent(@RequestBody Student student){
         System.out.println(student.getId());
         System.out.println(student.getFirstName());
