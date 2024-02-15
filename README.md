@@ -303,4 +303,186 @@ Update user by ID => [http://localhost:8080/api/user/1]
 Delete user by ID => [http://localhost:8080/api/user/1]
 
 
+# Spring Boot Data Transfer Object (DTO) Implementation
+
+## Introduction
+
+Data Transfer Objects (DTOs) are used to transfer data between layers of an application, such as between the controller and service layers. In a Spring Boot application, DTOs help in encapsulating the data required for communication and decouple the internal domain model from the external representation.
+
+## Why Use DTOs?
+
+- **Encapsulation:** DTOs encapsulate data, providing a clear contract between layers.
+- **Reduced Payload:** Transmit only necessary data, reducing network overhead.
+- **Versioning:** Easily manage versioning of data structures without affecting the domain model.
+
+## Implementation Steps
+
+### 1. Create DTO Classes
+
+Create separate DTO classes for each entity or use case. These classes should only contain fields required for data transfer.
+
+```java
+// Example: UserDTO.java
+
+public class UserDTO {
+    private Long id;
+    private String username;
+    private String email;
+
+    // Constructors, getters, and setters
+}
+```
+
+### 2. Convert Entities to DTOs
+
+Utilize conversion methods to transform entities into DTOs and vice versa. You can use libraries like ModelMapper, MapStruct or implement conversion methods manually.
+
+```java
+package com.project.crudapiwithdto.mapper;
+
+import com.project.crudapiwithdto.dto.UserDto;
+import com.project.crudapiwithdto.entity.User;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+@Mapper
+public interface AutoMapper {
+    
+    AutoMapper MAPPER = Mappers.getMapper(AutoMapper.class);
+    UserDto JpaToDto(User user);
+    User DtoToJpa (UserDto userDto);
+}
+```
+
+### 3. Use DTOs in Controllers
+
+In your Spring MVC controllers, use DTOs for request and response payloads.
+
+```java
+public UserDto getUserById(Long id) {
+
+        User user =  userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("user" , "id" , id)
+        );
+
+        //return UserMapper.jpaToDto(user);
+        return AutoMapper.MAPPER.JpaToDto(user);
+    }
+```
+
+
+# Exception Handling in Spring Boot
+
+## Introduction
+
+Exception handling is a crucial aspect of any application to gracefully manage errors and provide meaningful responses to clients. In a Spring Boot application, you can implement both custom and global exception handling mechanisms.
+
+## Custom Exception Handling
+
+### Step 1: Create Custom Exception
+
+Create a custom exception class that extends `RuntimeException` or a subclass of it.
+
+```java
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+public class EmailExitException extends RuntimeException{
+
+    private String  message;
+    public EmailExitException(String message){
+        super(message);
+    }
+```
+
+### Step 2: Create Exception Handler
+
+Create a class with methods annotated with `@ExceptionHandler` to handle specific exceptions.
+
+```java
+@ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorDetails> handleUserNotFound(UserNotFoundException userNotFoundException, WebRequest webRequest){
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                LocalDate.now(),
+                userNotFoundException.getMessage(),
+                webRequest.getDescription(false), "USER_NOT_FOUND"
+        );
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+```
+
+### Step 3: Throw Custom Exception
+
+In your service or controller, throw the custom exception when needed.
+
+```java
+@Override
+    public UserDto getUserById(Long id) {
+
+        User user =  userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("user" , "id" , id)
+        );
+
+        //return UserMapper.jpaToDto(user);
+        return AutoMapper.MAPPER.JpaToDto(user);
+    }
+```
+
+## Global Exception Handling
+
+### Step 1: Create Global Exception Handler
+
+Create a class with methods annotated with `@ExceptionHandler` to handle exceptions globally.
+
+```java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorDetails> handleUserNotFound(UserNotFoundException userNotFoundException, WebRequest webRequest){
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                LocalDate.now(),
+                userNotFoundException.getMessage(),
+                webRequest.getDescription(false), "USER_NOT_FOUND"
+        );
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+}
+```
+
+### Step 2: Customize Error Response
+
+To provide a more detailed error response, you can create a custom `ErrorDetails` class.
+
+```java
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class ErrorDetails {
+
+    private LocalDate timestamp;
+    private String message;
+    private String path;
+    private String errorCode;
+
+}
+```
+
+Modify the global exception handler to return an instance of `ErrorDetails`.
+
+```java
+@ExceptionHandler(EmailExitException.class)
+    public ResponseEntity<ErrorDetails> handleUserNotFound(EmailExitException emailExitException, WebRequest webRequest){
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                LocalDate.now(),
+                emailExitException.getMessage(),
+                webRequest.getDescription(false), "EMAIL_ALREADY_EXITS "
+        );
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+```
+
+
+
 ####Continue............
