@@ -22,7 +22,7 @@ public class StudentController {
 //    @PathVariable extract values from URI templates and bind them to method parameters
 
 
-//    http://localhost:8080/students/1/zohaib/ahmad
+//    http://localhost:8080/students/1/zohaib/ahmed
     @GetMapping("/students/{id}/{FirstName}/{LastName}")
     public Student StudentPathVariable(@PathVariable int id,
                                        @PathVariable String FirstName,

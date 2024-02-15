@@ -28,7 +28,7 @@ public class UserController {
     }
 
     //API CRUD READ OPERATION
-//    http://localhost:8080/api/user/1
+//    http://localhost:8080/api/user/5
 @GetMapping("{id}")
     public ResponseEntity<User> getById(@PathVariable Long id){
         User user = userService.getUserById(id);
