@@ -1,7 +1,7 @@
 # Spring Boot Learning Journey 🚀
 
 Explore the world of Spring Boot with this repository! 🌱
-
+ 
 Welcome to my Spring Boot learning journey repository, where I document my progress, experiments, and code snippets as I dive into the powerful world of Spring Boot.
 
 # Spring Core Concepts
@@ -164,5 +164,143 @@ public ResponseEntity<String> addProduct(@RequestBody Product product) {
     return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully");
 }
 ```
+
+# Restful API performing CRUD operations for user management
+I have creaed restful API using Spring Web, Spring Data JPA, and Lombok for simple user management. 
+
+### 1. Spring Web:
+
+Spring Web is a part of the Spring Framework that provides support for building web applications, including RESTful services. It includes features like MVC (Model-View-Controller) architecture, request handling, and various utilities for web development.
+
+Here is an example of a simple Spring Web controller:
+
+```java
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class HelloController {
+
+    @GetMapping("/hello")
+    public String hello(Model model) {
+        model.addAttribute("message", "Hello, Spring Web!");
+        return "hello";
+    }
+}
+```
+
+In this example, the `@Controller` annotation marks the class as a Spring MVC controller. The `@GetMapping("/hello")` annotation specifies that the `hello` method will handle GET requests to the "/hello" endpoint.
+
+### 2. Spring Data JPA:
+
+Spring Data JPA simplifies database access in Spring applications using the Java Persistence API (JPA). It provides a higher-level abstraction over JPA, reducing boilerplate code and making it easier to work with databases.
+
+Here's an example of a simple JPA entity:
+
+```java
+package com.project.crudapi.entity;
+
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "user")
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
+    private String firstName;
+    @Column(nullable = false)
+    private String lastName;
+    @Column(nullable = false, unique = true)
+    private String email;
+}
+```
+
+Spring Data JPA can then automatically generate queries based on method names in a repository interface. For example:
+
+```java
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    User findByUsername(String username);
+
+    // Additional query methods
+}
+```
+
+### 3. Lombok:
+
+Project Lombok is a library that helps reduce boilerplate code in Java applications by automatically generating common code during the compilation process. It provides annotations like `@Data`, `@Getter`, `@Setter`, etc., to simplify the creation of classes.
+
+Here's an example of a Lombok-annotated class:
+
+```java
+package com.project.crudapi.entity;
+
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "user")
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
+    private String firstName;
+    @Column(nullable = false)
+    private String lastName;
+    @Column(nullable = false, unique = true)
+    private String email;
+}
+
+```
+
+## Configration of application.properties file for database connection.
+```
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.datasource.url=jdbc:mysql://localhost:3306/user_management
+
+spring.datasource.username=username
+spring.datasource.password=password
+
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.hibernate.ddl-auto=update
+
+```
+## API end points
+
+Create User => [http://localhost:8080/api/user] 
+
+Get user by ID => [http://localhost:8080/api/user/1]
+
+Get all users => [http://localhost:8080/api/user]
+
+Update user by ID => [http://localhost:8080/api/user/1]
+
+Delete user by ID => [http://localhost:8080/api/user/1]
+
 
 ####Continue............
