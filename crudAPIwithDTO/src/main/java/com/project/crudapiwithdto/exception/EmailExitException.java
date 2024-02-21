@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class EmailExitException extends RuntimeException{
 
     private String  message;
-
     public EmailExitException(String message){
         super(message);
     }

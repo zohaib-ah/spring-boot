@@ -7,7 +7,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface AutoMapper {
 
-
     AutoMapper MAPPER = Mappers.getMapper(AutoMapper.class);
     UserDto JpaToDto(User user);
     User DtoToJpa (UserDto userDto);
