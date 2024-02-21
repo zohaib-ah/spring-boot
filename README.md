@@ -485,4 +485,47 @@ Modify the global exception handler to return an instance of `ErrorDetails`.
 
 
 
-####Continue............
+# Spring Security Overview
+
+Spring Security is a powerful and customizable authentication and access control framework for Java applications. It is widely used in Spring Boot applications to secure them against various security threats. 
+
+## What is Spring Security?
+Spring Security is a part of the larger Spring Framework and focuses on providing comprehensive security services for Java EE-based enterprise software applications. It offers a flexible and customizable authentication and access control framework that can be easily integrated with Spring Boot applications.
+
+Spring Security addresses common security concerns such as authentication, authorization, and protection against common security vulnerabilities like cross-site scripting (XSS), cross-site request forgery (CSRF), and more.
+
+## User Authentication
+
+Authentication is the process of verifying the identity of a user, ensuring that they are who they claim to be. Spring Security provides various authentication mechanisms, including:
+
+### In-Memory Authentication
+In-memory authentication is a simple and convenient way to define users and their roles directly in the application code. It is suitable for small applications or for testing purposes. 
+
+### Database Authentication
+
+For larger applications, it is common to store user information in a database. Spring Security supports integration with databases, allowing users and their roles to be stored and managed externally.
+
+
+## Authorization
+
+Authorization is the process of determining if a user has the necessary permissions to access a specific resource or perform a particular action. Spring Security provides a flexible and role-based authorization mechanism.
+
+
+
+## Method-Based Authentication
+
+Spring Security provides @PreAuthorize annotation for method-level security. It allows you to specify an expression that determines whether a user can invoke a particular method. Here's an example:
+
+```java
+@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @GetMapping("{id}")
+    public ResponseEntity<TaskDto> getTask(@PathVariable Long id){
+        TaskDto taskDto = taskService.getTask(id);
+        return new ResponseEntity<>(taskDto, HttpStatus.OK);
+    }
+```
+
+
+
+
+#### Continue............
