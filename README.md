@@ -525,7 +525,49 @@ Spring Security provides @PreAuthorize annotation for method-level security. It 
     }
 ```
 
+# Task Management API with Spring Boot and Spring Security
 
+It is an implementation of task management API. where, users can keep track of their tasks by performing basic operations such as creating, updating, and deleting tasks.
+
+## Features
+
+- **Admin Role:**
+  - Create, Update, and Delete tasks.
+  - Can perform all other operations.
+
+- **User Role:**
+  - Fetch a specific task bt id.
+  - Get a list of all tasks.
+  - Mark tasks complete or in-complete.
+
+
+## API Endpoints
+
+### Tasks
+
+- **Create Task:**
+  - `POST /api/tasks`
+  - Requires Admin role
+
+- **Update Task:**
+  - `PUT /api/tasks/{taskId}`
+  - Requires Admin role
+
+- **Delete Task:**
+  - `DELETE /api/tasks/{taskId}`
+  - Requires Admin role
+
+- **Get Task by ID:**
+  - `GET /api/tasks/{taskId}`
+  - Requires User role, admin
+
+- **Get All Tasks:**
+  - `GET /api/tasks`
+  - Requires User role, admin
+
+- **Patch Task:**
+  - `PATCH /api/tasks/{taskId}`
+  - Requires User role, admin
 
 
 #### Continue............
