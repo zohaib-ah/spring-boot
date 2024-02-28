@@ -10,6 +10,6 @@ public class HelloWorldController {
     //http://localhost:8080/hello
     @GetMapping("/hello")
     public String HelloWorld(){
-        return "Hello";
+        return "Hello, I am learning Spring Boot";
     }
 }
